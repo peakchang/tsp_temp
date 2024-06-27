@@ -24,7 +24,7 @@ export const load = async ({ fetch, url }) => {
 
     const seoValue = {
         title: siteName,
-        description: '휴대폰 성지 정보, 알뜰폰 정보, 자급제 및 인터넷 정보까지. 휴대폰과 통신에 관련된 모든것 올어바웃폰',
+        description: '휴대폰 성지, 인터넷 성지, 핸드폰 성지 알뜰폰에 자급제폰까지! 더싼폰에서 통신비 절약 확실하게 즐겨보자!',
         url: url.href,
         image: `${url.href}logo.png`,
         date: '23-12-07',
