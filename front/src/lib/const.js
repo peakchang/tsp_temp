@@ -8,6 +8,6 @@ export const category_list = [
     { link: 'board', name: '게시판', type: 'img', db: 'free_board' },
 ]
 
-export const siteName = '더싼폰 - 최저가 핸드폰 성지 휴대폰 성지!'
+export const siteName = '더싼폰 - 최저가 휴대폰 성지 핸드폰 성지!'
 
 export const back_api = `${import.meta.env.VITE_SERVER_URL}/api/v3`
