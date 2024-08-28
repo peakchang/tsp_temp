@@ -69,4 +69,13 @@ CREATE TABLE IF NOT EXISTS sub_board(
     sb_updated_at DATETIME
 );
 
+
+CREATE TABLE IF NOT EXISTS board_ready(
+    br_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    br_subject VARCHAR(255),
+    br_category VARCHAR(50),
+    br_imgs VARCHAR(255),
+    br_date DATE
+);
+
 */

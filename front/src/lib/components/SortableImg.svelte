@@ -154,7 +154,7 @@
                     // console.log(fileName);
 
                     axios
-                        .post(`${back_api}/editor/img_upload`, imgForm, {
+                        .post(`${back_api}/editor/onimg_upload`, imgForm, {
                             headers: {
                                 "Content-Type": "multipart/form-data",
                             },
