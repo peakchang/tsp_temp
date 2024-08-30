@@ -20,8 +20,20 @@
     export let maxImgCount = 9999999;
     let imgArr = [];
 
+    console.log(modifyImageList);
+    
+
     onMount(() => {
         if (modifyImageList) {
+            let tempImgArr = [];
+            for (let i = 0; i < modifyImageList.length; i++) {
+                const imgObj = {
+                    src: modifyImageList[i],
+                    id: crypto(),
+                };
+                tempImgArr.push(imgObj);
+            }
+            imgArr = tempImgArr;
         }
         // For Lists
         sortableLists = new Sortable(listsEl, {

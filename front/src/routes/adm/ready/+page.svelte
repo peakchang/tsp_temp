@@ -23,6 +23,8 @@
     let checkedList = [];
     let checkedWrap;
     let allChk = false;
+
+    // 창이 닫힐때 이미지가 삭제됨, 업로드 되고 창이 닫힐때도 동일 적용이므로 uploadStatus가 true 면 삭제 안되게 하기 (업로드시에는 이미지 삭제 안되게)
     let uploadStatus = false;
 
     $: data, setData();
@@ -34,7 +36,13 @@
     $: contentModalBool, chkModalBoolFunc();
 
     async function chkModalBoolFunc() {
-        if (!contentModalBool && !uploadStatus) {
+        if (!contentModalBool) {
+            br_id = "";
+            br_subject = "";
+            br_category = "";
+            br_imgs = "";
+            br_date = "";
+        } else if (!contentModalBool && !uploadStatus) {
             let delImgArr = [];
             if (!br_id) {
                 delImgArr = imgArr;
@@ -51,12 +59,6 @@
                     );
                 } catch (error) {}
             }
-
-            br_id = "";
-            br_subject = "";
-            br_category = "";
-            br_imgs = "";
-            br_date = "";
         }
 
         uploadStatus = false;
@@ -110,13 +112,24 @@
     }
 
     function openUpdateModal() {
+        console.log(this.value);
+        console.log(readyList);
+
         const selData = readyList[this.value];
+
+        console.log(selData);
+
         br_id = selData["br_id"];
         br_subject = selData["br_subject"];
         br_category = selData["br_category"];
         br_imgs = selData["br_imgs"];
         br_date = moment(selData["br_date"]).format("YYYY-MM-DD");
         imgArr = br_imgs.split(",");
+
+        console.log(br_subject);
+        console.log(imgArr);
+        
+
         contentModalBool = true;
     }
 
