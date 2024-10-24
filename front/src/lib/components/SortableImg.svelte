@@ -9,6 +9,7 @@
     import { createEventDispatcher } from "svelte";
     import { back_api } from "$src/lib/const";
     import cryptoRandomString from "crypto-random-string";
+    import imageCompression from "browser-image-compression";
     const dispatch = createEventDispatcher();
 
     const crypto = () => cryptoRandomString({ length: 10 });
