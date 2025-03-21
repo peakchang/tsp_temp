@@ -78,4 +78,13 @@ CREATE TABLE IF NOT EXISTS board_ready(
     br_date DATE
 );
 
+
+CREATE TABLE IF NOT EXISTS view_ready(
+    bo_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    bo_show_type VARCHAR(50),
+    bo_category VARCHAR(255),
+    bo_subject VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    bo_content TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+);
+
 */

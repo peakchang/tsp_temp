@@ -96,6 +96,91 @@ boardRouter.post('/modify', async (req, res, next) => {
 
 
 
+boardRouter.post('/upload_ready', async (req, res, next) => {
+    const getId = req.body.id;
+    try {
+        const getUploadDataQuery = "SELECT * FROM view_ready WHERE bo_id = ?";
+        const [getUploadData] = await sql_con.promise().query(getUploadDataQuery, [getId]);
+        const updateData = getUploadData[0]
+        const delId = updateData.bo_id
+        delete updateData.bo_id;
+        const queryData = getQueryStr(updateData, 'insert', 'bo_created_at');
+        const insertBoardQuery = `INSERT INTO view_board (${queryData.str}) VALUES (${queryData.question})`
+        await sql_con.promise().query(insertBoardQuery, queryData.values);
+        const deleteReadyQuery = "DELETE FROM view_ready WHERE bo_id = ?";
+        await sql_con.promise().query(deleteReadyQuery, [delId]);
+    } catch (error) {
+        console.error(error.message);
+    }
+
+
+    res.json({})
+})
+
+boardRouter.get('/load_ready_list', async (req, res, next) => {
+
+    console.log('안들어와?!?!?!');
+
+    let ready_list = [];
+    try {
+        const loadReadyListQuery = "SELECT * FROM view_ready";
+        const [loadReadyList] = await sql_con.promise().query(loadReadyListQuery);
+        ready_list = loadReadyList;
+    } catch (error) {
+        console.error(error.message);
+    }
+    res.json({ ready_list })
+})
+
+boardRouter.post('/write_ready', async (req, res, next) => {
+    let status = true;
+    const body = req.body;
+
+    console.log(body);
+    if (body.type == 'upload') {
+        const queryData = getQueryStr(body.allData, 'insert');
+        try {
+            const insertBoardQuery = `INSERT INTO view_ready (${queryData.str}) VALUES (${queryData.question})`
+            await sql_con.promise().query(insertBoardQuery, queryData.values);
+        } catch (error) {
+            console.error(error.message);
+            status = false;
+        }
+
+    }
+    // 
+    // else {
+
+    //     delete body.allData['bo_created_at'];
+    //     delete body.allData['bo_updated_at'];
+
+    //     const queryData = getQueryStr(body.allData, 'update', 'bo_updated_at');
+    //     queryData.values.push(body.allData['bo_id'])
+    //     delete body.allData['bo_id'];
+    //     try {
+    //         const updateBoardQuery = `UPDATE ${req.body.showType} SET ${queryData.str} WHERE bo_id = ?`;
+    //         await sql_con.promise().query(updateBoardQuery, queryData.values);
+    //     } catch (error) {
+    //         status = false;
+    //         console.error(error.message);
+    //     }
+    // }
+
+    const imgList = body.contentArr
+    for (let i = 0; i < imgList.length; i++) {
+        if (imgList[i]) {
+            try {
+                fs.unlinkSync(imgList[i]);
+            } catch (error) {
+                console.error(error);
+
+            }
+        }
+    }
+    res.json({ status })
+})
+
+
 boardRouter.post('/write', async (req, res, next) => {
     let status = true;
     const body = req.body;
