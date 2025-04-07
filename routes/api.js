@@ -16,6 +16,22 @@ import fs from "fs";
 
 const apiRouter = express.Router();
 
+apiRouter.post('/get_latest_link', async (req, res) => {
+    let status = true;
+    
+    try {
+        const getLatestLinkQuery = " SELECT bo_subject, bo_id FROM view ORDER BY bo_id DESC LIMIT ;";
+        const link_list = await sql_con.promise().query(getLatestLinkQuery);
+        link_list = link_list[0];
+
+        return link_list;
+    } catch (error) {
+
+    }
+    res.json({ status, link_list })
+})
+
+
 
 apiRouter.post('/python_writer', async (req, res) => {
     let status = true;
