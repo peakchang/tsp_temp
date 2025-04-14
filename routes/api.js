@@ -16,19 +16,23 @@ import fs from "fs";
 
 const apiRouter = express.Router();
 
-apiRouter.post('/get_latest_link', async (req, res) => {
+apiRouter.post('/get_latest_list', async (req, res) => {
+    console.log('들어옴?!?!');
+
+    const body = req.body;
+    let latest_list = [];
     let status = true;
-    
     try {
-        const getLatestLinkQuery = " SELECT bo_subject, bo_id FROM view ORDER BY bo_id DESC LIMIT ;";
-        const link_list = await sql_con.promise().query(getLatestLinkQuery);
-        link_list = link_list[0];
+        const getLatestListQuery = `SELECT bo_id, bo_subject, bo_name FROM ${body.board} ORDER BY bo_id DESC LIMIT ${body.link_count}`;
+        console.log(getLatestListQuery);
 
-        return link_list;
+        const [getLatestList] = await sql_con.promise().query(getLatestListQuery);
+        latest_list = getLatestList
     } catch (error) {
-
+        status = false;
     }
-    res.json({ status, link_list })
+
+    res.json({ latest_list, status })
 })
 
 
