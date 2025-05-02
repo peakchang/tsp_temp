@@ -38,7 +38,7 @@ export const load = async ({ params, url }) => {
         // description
         const viewTextOnly = content['bo_content'].replace(/<[^>]+>/g, ' ');
         const viewTextOnlyFilter = viewTextOnly.replace(/\s+/g, ' ').trim();
-        seoValue['description'] = truncateTextTo100Chars(viewTextOnlyFilter);
+        seoValue['description'] = "더싼폰 게시판 - " + truncateTextTo100Chars(viewTextOnlyFilter);
         // image
         const $ = cheerio.load(content['getContentText']);
         const imageTag = $("img");
